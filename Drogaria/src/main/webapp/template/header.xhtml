@@ -1,0 +1,28 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
+
+	<div class="bar-logo">
+		<p:graphicImage url="/resources/img/droga3.png" width="5%" />
+	</div>
+
+	<div class="bar-buscar">
+		<h:form id="formBuscar">
+			<p:inputText placeholder="Buscar..." />
+			<p:commandButton icon="ui-icon-search" type="button" />
+		</h:form>
+	</div>
+
+	<div class="bar-horario">
+		<h:outputLabel value="Horario" />
+	</div>
+
+	<div class="bar-usuario">
+		<h:outputLabel value="info. user, logout" />
+	</div>
+
+</ui:composition>

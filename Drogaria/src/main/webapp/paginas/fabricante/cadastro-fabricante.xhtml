@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	template="/template/template.xhtml">
+
+	<ui:define name="content">
+		<p:growl id="mensagem" />
+
+		<p:panel header="Cadastro" style="text-align:center;">
+			<p:panelGrid columns="2">
+				<h:form id="frmCadastroFabricantes">
+					<p:outputLabel value="Nome: " />
+					<p:inputText size="70" maxlength="70"
+						value="#{beanCadastroFabricante.fabricante.fabricante}" />
+					<p:commandButton value="Cadastrar"
+						update="frmCadastroFabricantes, frmListaFabricantes"
+						actionListener="#{beanCadastroFabricante.cadastrarNovoFabricante}" />
+				</h:form>
+			</p:panelGrid>
+		</p:panel>
+
+		<br />
+		<p:separator />
+		<br />
+
+		<p:panel header="Fabricante" style="text-align:center;">
+			<h:form id="frmListaFabricantes">
+				<p:dataTable emptyMessage="Nenhum fabricante cadastrado."
+					value="#{beanCadastroFabricante.listaFabricante}" var="fabricante"
+					id="dtFabricante" rows="10" paginator="true"
+					paginatorPosition="bottom">
+					<p:column headerText="ID">
+						<p:outputLabel value="#{fabricante.id}" />
+					</p:column>
+
+					<p:column headerText="Fabricante">
+						<p:outputLabel value="#{fabricante.fabricante}" />
+					</p:column>
+
+					<p:column headerText="Editar">
+						<p:commandLink value="Editar"
+							oncomplete="PF('dialogoEdicaoFabricante').show(); " update="frmEditarFabricante:painelEditarFabricante">
+
+							<f:setPropertyActionListener value="#{fabricante}"
+								target="#{beanCadastroFabricante.fabricanteSelecionado}" />
+
+						</p:commandLink>
+					</p:column>
+
+					<p:column headerText="Remover">
+						<p:commandLink value="Remover"
+							oncomplete="PF('dialogoExclusaoFabricante').show();">
+
+							<f:setPropertyActionListener value="#{fabricante}"
+								target="#{beanCadastroFabricante.fabricanteSelecionado}" />
+
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+
+		<!-- Modal para confirmação da exclusão de fabricantes -->
+		<p:dialog modal="true" resizable="false" draggable="false"
+			widgetVar="dialogoExclusaoFabricante" header="Fabricante">
+			<h:form>
+				<p:panelGrid columns="1">
+					<p:outputLabel
+						value="Tem certeza que deseja deletar o fabricante #{beanCadastroFabricante.fabricanteSelecionado}?" />
+				</p:panelGrid>
+
+				<p:panelGrid>
+
+					<p:commandButton value="Confirmar"
+						actionListener="#{beanCadastroFabricante.deletarFabricante}"
+						oncomplete="PF('dialogoExclusaoFabricante').hide();"
+						update="frmListaFabricantes:dtFabricante" />
+
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogoExclusaoFabricante').hide();" />
+
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<!-- Modal para edição de Fabricantes -->
+		<p:dialog modal="true" resizable="false" closable="true"
+			draggable="false" header="Fabricante"
+			widgetVar="dialogoEdicaoFabricante">
+
+			<h:form id="frmEditarFabricante">
+				<p:panelGrid columns="2" id="painelEditarFabricante">
+					<p:outputLabel value="ID" />
+					<p:inputText disabled="true" value="#{beanCadastroFabricante.fabricanteSelecionado.id}" />
+					<p:outputLabel value="Fabricante" />
+					<p:inputText
+						value="#{beanCadastroFabricante.fabricanteSelecionado.fabricante}" />
+				</p:panelGrid>
+
+				<p:panelGrid>
+					<p:commandButton value="Salvar"
+						actionListener="#{beanCadastroFabricante.editarFabricante}"
+						update="frmListaFabricantes:dtFabricante"
+						oncomplete="PF('dialogoEdicaoFabricante').hide();" />
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogoEdicaoFabricante').hide();" />
+				</p:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

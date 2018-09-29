@@ -1,0 +1,93 @@
+.bar {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: #212121;
+	height: 60px;
+}
+
+.bar-logo {
+	color: white;
+	position: absolute;
+	left: 5%;
+	top: 5%;
+}
+
+.bar-horario {
+	position: absolute;
+	color: white;
+	left: 90%;
+	top: 10%;
+}
+
+.bar-usuario {
+	color: white;
+	position: absolute;
+	left: 90%;
+	top: 45%;
+}
+
+.bar-buscar {
+	position: absolute;
+	left: 67%;
+	top: 30%;
+}
+
+.content {
+	color: black;
+	position: absolute;
+	left: 18%;
+	top: 12%;
+	width: 75%;
+	height: 70%;
+}
+
+.menu {
+	height:50%;
+	position: absolute;
+	left: 0;
+	top: 12%;
+}
+
+.link1 {
+	position: absolute;
+	width: 35%;
+	height: 35%;
+	background: pink;
+	left: 10%;
+	top: 5%;
+}
+
+.link2 {
+	position: absolute;
+	width: 35%;
+	height: 35%;
+	background: pink;
+	left: 55%;
+	top: 5%;
+}
+
+.link3 {
+	position: absolute;
+	width: 35%;
+	height: 35%;
+	background: pink;
+	left: 10%;
+	top: 50%;
+}
+
+.link4 {
+	position: absolute;
+	width: 35%;
+	height: 35%;
+	background: pink;
+	left: 55%;
+	top: 50%;
+}
+
+.footer {
+	
+}

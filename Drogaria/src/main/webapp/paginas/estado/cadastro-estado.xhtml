@@ -1,0 +1,131 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
+
+	<ui:define name="content">
+
+		<p:panel header="Cadastro" style="text-align:center;">
+			<p:panelGrid id="painelCadastroEstado" columns="5">
+				<h:form id="formCadastroEstado">
+					<p:outputLabel value="Sigla: " />
+					<p:inputText placeholder="MG"
+						value="#{beanCadastroEstado.entidadeEstado.sigla}" maxlength="2"
+						size="2" />
+
+					<p:outputLabel value="Estado: " />
+					<p:inputText placeholder="Minas Gerais"
+						value="#{beanCadastroEstado.entidadeEstado.nome}" maxlength="20"
+						size="20" />
+
+					<p:commandButton value="Cadastrar"
+						actionListener="#{beanCadastroEstado.salvarNovoEstado}"
+						update="formCadastroEstado, frmEstado:dtTableEstado" />
+				</h:form>
+			</p:panelGrid>
+		</p:panel>
+		<br />
+
+		<p:separator />
+
+		<br />
+		<!-- Data Table Estados -->
+
+		<p:panel header="Estados" style="text-align:center;">
+
+			<h:form id="frmEstado">
+				<p:dataTable id="dtTableEstado" paginator="true" rows="10"
+					emptyMessage="Nenhum registro"
+					value="#{beanCadastroEstado.listaEstado}" var="estado"
+					paginatorPosition="bottom">
+
+					<p:column headerText="ID">
+						<p:outputLabel value="#{estado.id}" />
+					</p:column>
+
+					<p:column headerText="Nome" sortBy="#{estado.nome}"
+						filterBy="#{estado.nome}">
+						<p:outputLabel value="#{estado.nome}" />
+					</p:column>
+
+					<p:column headerText="Sigla">
+						<p:outputLabel value="#{estado.sigla}" />
+					</p:column>
+
+					<p:column headerText="Editar">
+						<p:commandLink update="frmEdicaoEstado:painelEdicaoEstado"
+							oncomplete="PF('dialogEditarEstado').show();" value="Editar">
+
+							<f:setPropertyActionListener value="#{estado}"
+								target="#{beanCadastroEstado.estadoSelecionado}" />
+
+						</p:commandLink>
+					</p:column>
+					<p:column headerText="Remover">
+						<p:commandLink update="frmEstado:dtTableEstado, @this"
+							oncomplete="PF('dialogExcluirEstado').show();" value="Excluir">
+
+							<f:setPropertyActionListener value="#{estado}"
+								target="#{beanCadastroEstado.estadoSelecionado}" />
+
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:panel>
+
+
+
+		<!-- Mensagem de confirmação para exclusão de estado -->
+
+		<p:dialog draggable="false" closable="true" resizable="false"
+			widgetVar="dialogExcluirEstado" modal="true">
+			<p:panelGrid columns="1">
+				<p:outputLabel value="Tem certeza que deseja excluir o estado?" />
+				<p:panelGrid columns="2" style="text-align:center;">
+					<h:form>
+						<p:commandButton value="Confirmar"
+							actionListener="#{beanCadastroEstado.excluirEstado}"
+							update="frmEstado:dtTableEstado, @this"
+							oncomplete="PF('dialogExcluirEstado').hide();" />
+						<p:commandButton value="Cancelar"
+							oncomplete="PF('dialogExcluirEstado').hide();" />
+					</h:form>
+				</p:panelGrid>
+			</p:panelGrid>
+		</p:dialog>
+
+		<!-- Modal Editar Estado  -->
+
+		<p:dialog closable="true" draggable="false" resizable="false"
+			modal="true" widgetVar="dialogEditarEstado" header="Editar Estado"
+			id="dialogo">
+			<h:form id="frmEdicaoEstado">
+				<p:panelGrid columns="2" id="painelEdicaoEstado">
+					<p:outputLabel value="ID: " />
+					<p:inputText value="#{beanCadastroEstado.estadoSelecionado.id}"
+						disabled="true" />
+					<p:outputLabel value="Nome: " />
+					<p:inputText maxlength="20" size="20"
+						value="#{beanCadastroEstado.estadoSelecionado.nome}" />
+					<p:outputLabel value="Sigla: " />
+					<p:inputText maxlength="2" size="2"
+						value="#{beanCadastroEstado.estadoSelecionado.sigla}" />
+				</p:panelGrid>
+
+				<p:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{beanCadastroEstado.editarEstado}"
+						oncomplete="PF('dialogEditarEstado').hide();"
+						update="frmEstado:dtTableEstado, @this" />
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogEditarEstado').hide();" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>

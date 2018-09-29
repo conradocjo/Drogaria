@@ -1,0 +1,140 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	template="/template/template.xhtml">
+
+	<ui:define name="content">
+		<p:growl id="mensagem" />
+		<p:panel header="Cadastro Cidade" style="text-align:center">
+			<h:form id="formCadastroCidade">
+				<p:panelGrid columns="5" id="painelCadastroCidade">
+					<p:outputLabel value="Cidade: " />
+					<p:inputText value="#{beanCadastroCidade.cidade.nome}" />
+					<p:outputLabel value="Estado" />
+
+					<p:selectOneMenu filter="true" id="selectEstado" required="true"
+						value="#{beanCadastroCidade.estadoSelecionado}"
+						converter="omnifaces.SelectItemsConverter">
+
+
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione ..." />
+
+						<f:selectItems value="#{beanCadastroCidade.listaEstado}"
+							var="estado" itemLabel="#{estado.nome} - #{estado.sigla}"
+							itemValue="#{estado}" />
+
+
+					</p:selectOneMenu>
+
+					<p:commandButton value="Cadastrar"
+						action="#{beanCadastroCidade.salvarNovaCidade}"
+						update=":formCadastroCidade:painelCadastroCidade :frmListaCidades:datatableCadastroCidade" />
+
+				</p:panelGrid>
+
+			</h:form>
+		</p:panel>
+
+		<br />
+
+		<p:separator />
+
+		<br />
+
+		<p:panel header="Cidade" style="text-align:center">
+			<h:form id="frmListaCidades">
+				<p:dataTable paginator="true" paginatorPosition="bottom" rows="10"
+					id="datatableCadastroCidade"
+					value="#{beanCadastroCidade.listaCidade}" var="cidade"
+					emptyMessage="Nenhuma cidade cadastrada ...">
+
+					<p:column headerText="ID">
+						<p:outputLabel value="#{cidade.id}" />
+					</p:column>
+
+					<p:column headerText="Cidade" filterBy="#{cidade.nome}"
+						sortBy="#{cidade.nome}">
+						<p:outputLabel value="#{cidade.nome}" />
+					</p:column>
+
+					<p:column headerText="Estado" filterBy="#{cidade.estado.nome}"
+						sortBy="#{cidade.estado.nome}">
+						<p:outputLabel value="#{cidade.estado.nome}" />
+					</p:column>
+
+					<p:column headerText="Opção">
+
+						<p:commandButton icon="ui-icon-trash"
+							actionListener="#{beanCadastroCidade.removerCidade}"
+							update="frmListaCidades:datatableCadastroCidade">
+							<p:confirm header="Confirmação"
+								message="Deseja realmente deletar?" icon="ui-icon-alert" />
+							<f:attribute name="cidadeSelecionada" value="#{cidade}" />
+						</p:commandButton>
+
+						<p:commandButton icon="ui-icon-pencil"
+							oncomplete="PF('dialogoEditarCidade').show();"
+							update=":formEdicaoCadastro:painelEdicaoCidade">
+							<f:setPropertyActionListener
+								target="#{beanCadastroCidade.cidadeSelecionada}"
+								value="#{cidade}"  />
+						</p:commandButton>
+
+
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+
+		</p:panel>
+		<!-- Confirmação da exclusão -->
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Sim" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="Não" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+
+		<!-- Modal edição de cadastro -->
+		<p:dialog style="text-align:center;" header="Cidade" closable="true"
+			draggable="false" modal="true" widgetVar="dialogoEditarCidade"
+			resizable="false">
+			<h:form id="formEdicaoCadastro">
+				<p:panelGrid columns="2" id="painelEdicaoCidade">
+
+					<p:outputLabel value="ID: " />
+					<p:inputText value="#{beanCadastroCidade.cidadeSelecionada.id}" disabled="true" />
+
+					<p:outputLabel value="Cidade: " />
+					<p:inputText value="#{beanCadastroCidade.cidadeSelecionada.nome}" />
+
+					<p:outputLabel value="Estado" />
+
+					<p:selectOneMenu filter="true" id="selectEstado" required="true"
+						value="#{beanCadastroCidade.estadoSelecionado}"
+						converter="omnifaces.SelectItemsConverter">
+
+
+						<f:selectItem noSelectionOption="true" itemLabel="Selecione ..." />
+
+						<f:selectItems value="#{beanCadastroCidade.listaEstado}"
+							var="estado" itemLabel="#{estado.nome} - #{estado.sigla}"
+							itemValue="#{estado}" />
+
+
+					</p:selectOneMenu>
+
+				</p:panelGrid>
+					<p:commandButton value="Salvar"
+						actionListener="#{beanCadastroCidade.editarCidade}"
+						oncomplete="PF('dialogoEditarCidade').hide();" update="formEdicaoCadastro, frmListaCidades" style="float: right;
+    margin-top: 2%;"/>
+					
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>

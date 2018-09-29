@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
+<h:head>
+	<title>Drogaria - Conrado</title>
+	<h:outputStylesheet library="css" name="regras.css" />
+</h:head>
+<h:body>
+	<div class="bar">
+		<ui:insert name="header">
+			<ui:include src="/template/header.xhtml" />
+		</ui:insert>
+	</div>
+	<div class="content">
+		<ui:insert name="content">
+			<div class="link1">
+				<p:outputLabel>link1</p:outputLabel>
+			</div>
+
+			<div class="link2">
+				<p:outputLabel>link2</p:outputLabel>
+			</div>
+
+			<div class="link3">
+				<p:outputLabel>link3</p:outputLabel>
+			</div>
+
+			<div class="link4">
+				<p:outputLabel>link4</p:outputLabel>
+			</div>
+		</ui:insert>
+	</div>
+
+	<div class="menu">
+		<ui:insert name="menu">
+			<ui:include src="/template/menu.xhtml" />
+		</ui:insert>
+	</div>
+	<div class="footer">
+		<ui:insert name="footer">
+
+		</ui:insert>
+	</div>
+</h:body>
+</html>

@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	template="/template/template.xhtml">
+
+	<ui:define name="content">
+		<h:form id="formGeral">
+			<p:outputLabel value="Cadastro de Produtos: " />
+			<p:separator id="SeparadorCima" />
+			<br />
+			<p:panelGrid id="cadastroProdutos" columns="4">
+				<p:outputLabel value="Descrição:" />
+				<p:inputText value="#{beanCadastroProduto.produto.descricao}" />
+				<p:outputLabel value="Quantidade:" />
+				<p:inputNumber value="#{beanCadastroProduto.produto.quantidade}" />
+				<p:outputLabel value="Preço:" />
+				<p:inputNumber value="#{beanCadastroProduto.produto.preco}" />
+				<p:outputLabel value="Fabricante:" />
+				<p:selectOneMenu converter="omnifaces.SelectItemsConverter"
+					value="#{beanCadastroProduto.fabricanteSelecionado}" filter="true">
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione ..." />
+					<f:selectItems value="#{beanCadastroProduto.listaFabricantes}"
+						var="fabricantes" itemLabel="#{fabricantes.fabricante}"
+						itemValue="#{fabricantes}" />
+				</p:selectOneMenu>
+
+			</p:panelGrid>
+			<p:commandButton value="Cadastrar"
+				actionListener="#{beanCadastroProduto.salvar()}"
+				style="margin-top:1%;" update="formGeral:listaProdutos" />
+
+			<br />
+			<p:separator id="SeparadorBaixo" />
+			<br />
+			<p:panel header="Fabricante" style="text-align:center;">
+				<p:dataTable id="listaProdutos" paginator="true" rows="15"
+					value="#{beanCadastroProduto.listaDeProdutos}" var="produto"
+					paginatorPosition="bottom">
+
+					<p:column headerText="ID" width="40">
+						<p:outputLabel value="#{produto.id}" />
+					</p:column>
+					<p:column style="text-align:left;" headerText="Descrição"
+						filterBy="#{produto.descricao}" sortBy="#{produto.descricao}" width="250">
+						<p:outputLabel value="#{produto.descricao}" />
+					</p:column>
+					<p:column headerText="Qtd." width="60">
+						<h:outputLabel value="#{produto.quantidade}">
+
+						</h:outputLabel>
+					</p:column>
+					<p:column headerText="Valor" style="text-align:right;">
+						<p:outputLabel value="#{produto.preco}">
+							<f:convertNumber minFractionDigits="2" currencySymbol="R$"
+								type="currency" />
+						</p:outputLabel>
+					</p:column>
+					<p:column headerText="Fabricante"
+						filterBy="#{produto.fabricante.fabricante}" width="250"
+						sortBy="#{produto.fabricante.fabricante}">
+						<p:outputLabel value="#{produto.fabricante.fabricante}" />
+					</p:column>
+					<p:column headerText="Editar">
+
+					</p:column>
+					<p:column headerText="Remover">
+
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
