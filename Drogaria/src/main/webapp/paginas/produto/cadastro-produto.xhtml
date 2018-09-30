@@ -25,7 +25,7 @@
 					<f:selectItems value="#{beanCadastroProduto.listaFabricantes}"
 						var="fabricantes" itemLabel="#{fabricantes.fabricante}"
 						itemValue="#{fabricantes}" />
-				</p:selectOneMenu>s
+				</p:selectOneMenu>
 
 			</p:panelGrid>
 			<p:commandButton value="Cadastrar"
@@ -44,7 +44,8 @@
 						<p:outputLabel value="#{produto.id}" />
 					</p:column>
 					<p:column style="text-align:left;" headerText="Descrição"
-						filterBy="#{produto.descricao}" sortBy="#{produto.descricao}" width="250">
+						filterBy="#{produto.descricao}" sortBy="#{produto.descricao}"
+						width="250">
 						<p:outputLabel value="#{produto.descricao}" />
 					</p:column>
 					<p:column headerText="Qtd." width="60">
@@ -64,13 +65,50 @@
 						<p:outputLabel value="#{produto.fabricante.fabricante}" />
 					</p:column>
 					<p:column headerText="Editar">
-
+						<p:commandButton oncomplete="PF('edicao').show();"
+							icon="ui-icon-pencil" update="formGeral:painelDialogoEdicao">
+							<f:setPropertyActionListener value="#{produto}"
+								target="#{beanCadastroProduto.produtoSelecionado}" />
+						</p:commandButton>
 					</p:column>
 					<p:column headerText="Remover">
-
+						<p:commandButton oncomplete="PF('exclusao').show();"
+							icon="ui-icon-trash" update="formGeral:listaProdutos">
+							<f:setPropertyActionListener value="#{produto}"
+								target="#{beanCadastroProduto.produtoSelecionado}" />
+						</p:commandButton>
 					</p:column>
 				</p:dataTable>
 			</p:panel>
+			<!-- Dialogo Edição -->
+			<p:dialog widgetVar="edicao" header="Editar Produto"
+				draggable="false" resizable="false" closable="true"
+				responsive="true">
+				<p:panelGrid columns="2" id="painelDialogoEdicao">
+					<p:outputLabel value="ID:" />
+					<p:inputText value="#{beanCadastroProduto.produtoSelecionado.id}"
+						disabled="true" />
+					<p:outputLabel value="Descrição:" />
+					<p:inputText
+						value="#{beanCadastroProduto.produtoSelecionado.descricao}" />
+					<p:outputLabel value="Quantidade:" />
+					<p:inputNumber
+						value="#{beanCadastroProduto.produtoSelecionado.quantidade}" />
+					<p:outputLabel value="Valor:" />
+					<p:inputNumber
+						value="#{beanCadastroProduto.produtoSelecionado.preco}" />
+					<p:outputLabel value="Fabricante:" />
+					<p:selectOneMenu>
+						<f:selectItem/>
+						<f:selectItems/>
+					</p:selectOneMenu>
+
+				</p:panelGrid>
+			</p:dialog>
+			<!-- Dialogo Exclusão -->
+			<p:dialog widgetVar="exclusao">
+
+			</p:dialog>
 		</h:form>
 	</ui:define>
 

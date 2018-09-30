@@ -28,6 +28,7 @@ public class BeanCadastroProduto {
 	@PostConstruct
 	public void inicializar() {
 		setProduto(new EntidadeProduto());
+		produtoSelecionado = new EntidadeProduto();
 		fabricanteSelecionado = new EntidadeFabricante();
 		setListaFabricantes(new DaoFabricante().listar(new EntidadeFabricante()));
 		listaDeProdutos = dao.listar(produto);
@@ -42,7 +43,7 @@ public class BeanCadastroProduto {
 	}
 
 	public void editar() {
-		produtoSelecionado = new EntidadeProduto();
+
 	}
 
 	public void salvar() {
