@@ -14,11 +14,17 @@
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
+
 	<!-- Mapeamento do servlet, e definido padrão para acesso de páginas na 
 		url ".jsf" -->
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.jsf</url-pattern>
 	</servlet-mapping>
+
+	<!-- API NATIVA do servlet para upload de arquivos, utilizarei para imagens -->
+	<context-param>
+		<param-name>primefaces.UPLOADER</param-name>
+		<param-value>native</param-value>
+	</context-param>
 </web-app>

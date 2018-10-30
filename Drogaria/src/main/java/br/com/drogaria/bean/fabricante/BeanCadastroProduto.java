@@ -36,9 +36,12 @@ public class BeanCadastroProduto {
 
 	public void remover() {
 		try {
-			dao.deletar(produto);
+			dao.deletar(produtoSelecionado);
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			produto = new EntidadeProduto();
+			listaDeProdutos = dao.listar(produto);
 		}
 	}
 
@@ -54,6 +57,9 @@ public class BeanCadastroProduto {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Messages.addGlobalError("Erro ao gravar produto.");
+		} finally {
+			produto = new EntidadeProduto();
+			listaDeProdutos = dao.listar(produto);
 		}
 	}
 

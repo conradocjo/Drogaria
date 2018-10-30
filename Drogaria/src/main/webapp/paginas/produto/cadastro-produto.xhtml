@@ -8,6 +8,7 @@
 
 	<ui:define name="content">
 		<h:form id="formGeral">
+			<p:growl id="message" showDetail="true" />
 			<p:outputLabel value="Cadastro de Produtos: " />
 			<p:separator id="SeparadorCima" />
 			<br />
@@ -72,10 +73,12 @@
 						</p:commandButton>
 					</p:column>
 					<p:column headerText="Remover">
-						<p:commandButton oncomplete="PF('exclusao').show();"
-							icon="ui-icon-trash" update="formGeral:listaProdutos">
+						<p:commandButton icon="ui-icon-trash"
+							update="formGeral:listaProdutos">
 							<f:setPropertyActionListener value="#{produto}"
 								target="#{beanCadastroProduto.produtoSelecionado}" />
+							<p:confirm header="Excluir produto?"
+								message="Tem certeza que deseja excluir?" icon="ui-icon-alert" />
 						</p:commandButton>
 					</p:column>
 				</p:dataTable>
@@ -99,16 +102,19 @@
 						value="#{beanCadastroProduto.produtoSelecionado.preco}" />
 					<p:outputLabel value="Fabricante:" />
 					<p:selectOneMenu>
-						<f:selectItem/>
-						<f:selectItems/>
+						<f:selectItem />
+						<f:selectItems />
 					</p:selectOneMenu>
-
 				</p:panelGrid>
 			</p:dialog>
 			<!-- Dialogo Exclusão -->
-			<p:dialog widgetVar="exclusao">
-
-			</p:dialog>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					actionListener="#{beanCadastroProduto.remover()}"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 		</h:form>
 	</ui:define>
 
